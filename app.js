@@ -1,3 +1,4 @@
+//image arr fot display
 const imgs=["./images/rottweiler1.jpg","./images/rottweiler2.jpg","./images/rottweiler3.jpg","./images/rottweiler4.jpg"];
 const imageSlider=document.getElementById('img-con');
 let count=0;
@@ -5,7 +6,7 @@ let count=0;
  
 const CHANGESLIDE=(function(){
     
-
+    //display img on load
      const displayImg=(counts)=>{
         imageSlider.innerHTML=""
         const imgsx=document.createElement('img');
@@ -15,7 +16,8 @@ const CHANGESLIDE=(function(){
         imageSlider.appendChild(imgsx);
         
      };
-
+     
+     //on click move slide forwad
       const forward=()=>{
         
         count++
@@ -30,7 +32,7 @@ const CHANGESLIDE=(function(){
       //  navigation.createNav()
         
       }
-
+            //on click move slide backword
       const backward=()=>{
         
           count<=0? count=imgs.length-1:count--;
@@ -43,24 +45,29 @@ const CHANGESLIDE=(function(){
             
         
       }
-
+      //adjust image to fit frame
       const imageSize=(prop)=>{
-        prop.style.width='100%';
-        prop.style.height='100%';
-      }
 
+            prop.style.width='100%';
+            prop.style.height='100%';
+
+      }
+       //when images are done sliding start again
       const restart=()=>{
+
          if(count>=imgs.length){
              count=0;
-         }
-      }
+         };
+         
+      };
 
-      return{forward,backward,displayImg,imageSize}
+      return{forward,backward,displayImg,imageSize};
 })();
 
+    // navigations
 const navigation=(function(){
       const navigation=document.querySelector('.navigation');
-
+        //dynamically display the nav 
   const createNav=()=>{
         navigation.innerHTML=""
 
@@ -74,7 +81,7 @@ const navigation=(function(){
         
 
   };
-     
+         //turn background color to white when image moves
      const circles=()=>{
          document.querySelectorAll('.circles').forEach(el=>{
                if(el.id==count){
@@ -86,14 +93,18 @@ const navigation=(function(){
          });
 
      }
-     // click nav for img
+         //when click display the respective image
+
      const clickCircle=(e)=>{
+
           const ID=e.target.id
           if(e.target.id){
             count=ID
             CHANGESLIDE.displayImg(ID)
-          }
-    }
+          };
+
+    };
+
   return{
      createNav,
      circles,
@@ -120,5 +131,5 @@ document.querySelector(".navigation").addEventListener('click',navigation.clickC
     setInterval(function() {
         CHANGESLIDE.forward()
     }, 5000);
-}) 
+}) ;
 
