@@ -1,8 +1,54 @@
-//image arr fot display
-const imgs=["./images/rottweiler1.jpg","./images/rottweiler2.jpg","./images/rottweiler3.jpg","./images/rottweiler4.jpg"];
+let imgs=[];
+
+
+
+
 const imageSlider=document.getElementById('img-con');
+
 let count=0;
-//on click forward image should change
+
+
+//api_key=live_f3nb4aoarHr4fXGONfAt9dpu4w7Do4MZvvRAqfqb39aBj4TvxaOlTU0033KikhCw
+fetch("https://api.thedogapi.com/v1/images/search?limit=11",{mode:"cors"}
+  )
+  .then((res)=>{
+     return res.json()
+  })
+ 
+  .then((response)=>{
+     
+      response.forEach(el => {
+          imgs.push(el.url)
+         
+      })
+     
+       //events
+
+        
+       CHANGESLIDE.displayImg(count);
+       document.getElementById('right').addEventListener('click',CHANGESLIDE.forward);
+       document.getElementById('left').addEventListener('click',CHANGESLIDE.backward);
+       document.querySelector(".navigation").addEventListener('click',navigation.clickCircle);
+
+      navigation.createNav();
+      navigation.circles();
+
+       // every five second image should change
+
+       
+           setInterval(function() {
+               CHANGESLIDE.forward()
+           }, 7000);
+    
+  })
+
+  .catch((err)=>{
+   console.log(err)
+ })
+
+  
+
+
  
 const CHANGESLIDE=(function(){
     
@@ -29,7 +75,7 @@ const CHANGESLIDE=(function(){
         imageSize(imgsx);
         imageSlider.appendChild(imgsx);
      
-      //  navigation.createNav()
+   
         
       }
             //on click move slide backword
@@ -115,21 +161,5 @@ const navigation=(function(){
 // onclick backward image shech change
 
 
-//events
 
-window.addEventListener("DOMContentLoaded",navigation.createNav);
-window.addEventListener("DOMContentLoaded",navigation.circles);
-
-window.addEventListener("DOMContentLoaded",CHANGESLIDE.displayImg(count));
-document.getElementById('right').addEventListener('click',CHANGESLIDE.forward);
-document.getElementById('left').addEventListener('click',CHANGESLIDE.backward);
-document.querySelector(".navigation").addEventListener('click',navigation.clickCircle);
-
-// every five second image should change
-
- window.addEventListener('DOMContentLoaded',()=>{
-    setInterval(function() {
-        CHANGESLIDE.forward()
-    }, 5000);
-}) ;
 
