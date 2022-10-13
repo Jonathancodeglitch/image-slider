@@ -7,31 +7,20 @@ const imageSlider=document.getElementById('img-con');
 
 let count=0;
 
+async function getDogs(){
+    const response=await fetch("https://api.thedogapi.com/v1/images/search?limit=11",{mode:"cors"})
+    const dogData=await response.json()
+      dogData.forEach(el=> imgs.push(el.url));
 
-//api_key=live_f3nb4aoarHr4fXGONfAt9dpu4w7Do4MZvvRAqfqb39aBj4TvxaOlTU0033KikhCw
-fetch("https://api.thedogapi.com/v1/images/search?limit=11",{mode:"cors"}
-  )
-  .then((res)=>{
-     return res.json()
-  })
- 
-  .then((response)=>{
-     
-      response.forEach(el => {
-          imgs.push(el.url)
-         
-      })
-     
-       //events
-
+             //events
         
        CHANGESLIDE.displayImg(count);
        document.getElementById('right').addEventListener('click',CHANGESLIDE.forward);
        document.getElementById('left').addEventListener('click',CHANGESLIDE.backward);
        document.querySelector(".navigation").addEventListener('click',navigation.clickCircle);
 
-      navigation.createNav();
-      navigation.circles();
+            navigation.createNav();
+            navigation.circles();
 
        // every five second image should change
 
@@ -39,14 +28,11 @@ fetch("https://api.thedogapi.com/v1/images/search?limit=11",{mode:"cors"}
            setInterval(function() {
                CHANGESLIDE.forward()
            }, 7000);
-    
-  })
+}
+//api_key=live_f3nb4aoarHr4fXGONfAt9dpu4w7Do4MZvvRAqfqb39aBj4TvxaOlTU0033KikhCw
 
-  .catch((err)=>{
-   console.log(err)
- })
-
-  
+getDogs()
+  .catch((err)=>console.log(err))
 
 
  
